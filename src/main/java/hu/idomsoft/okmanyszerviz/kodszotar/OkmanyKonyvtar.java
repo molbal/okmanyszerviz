@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.NotLinkException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,7 +44,7 @@ public class OkmanyKonyvtar {
                 JSONObject okmanyTipus = (JSONObject) row;
 
                 okmanytipusList.add(new Okmanytipus(
-                        (int) okmanyTipus.get("kod"),
+                        Integer.parseInt((String)okmanyTipus.get("kod")),
                         (String) okmanyTipus.get("ertek"),
                         (String) okmanyTipus.get("validacio")
                 ));
@@ -52,10 +53,11 @@ public class OkmanyKonyvtar {
             log.info(String.format("Az okmány kódszótár betöltése sikerült (%d db elem)", okmanytipusList.size()));
 
         } catch (ParseException | IOException e) {
-            log.info(String.format("Sikertelen a kódszótár json betöltése: %s", e));
+            log.severe(String.format("Sikertelen a kódszótár json betöltése: %s", e));
+            log.info("Aktuális könyvtár:" + FileSystems.getDefault().getPath(".").toAbsolutePath().toString());
         }
         catch (Exception e) {
-            log.info(String.format("Sikertelen a kódszótár json feldolgozása: %s", e));
+            log.severe(String.format("Sikertelen a kódszótár json feldolgozása: %s", e));
         }
     }
 }

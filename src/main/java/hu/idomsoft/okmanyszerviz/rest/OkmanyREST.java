@@ -1,10 +1,12 @@
 package hu.idomsoft.okmanyszerviz.rest;
 
+import hu.idomsoft.okmanyszerviz.kodszotar.OkmanyKonyvtar;
 import hu.idomsoft.okmanyszerviz.kodszotar.Okmanytipus;
 import hu.idomsoft.okmanyszerviz.models.OkmanyDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,9 @@ import java.util.List;
 @RestController
 @Log
 public class OkmanyREST {
+
+    @Autowired
+    OkmanyKonyvtar okmanyKonyvtar;
 
     /**
      * Ellenőrzi a megadott hibákat majd
@@ -33,6 +38,6 @@ public class OkmanyREST {
     @ApiOperation("Visszaadja a betöltött okmánytípusok listáját.")
     @GetMapping("/debug/okmanytipus")
     public List<Okmanytipus> getOkmanyTipus() {
-        return new ArrayList<Okmanytipus>();
+        return okmanyKonyvtar.getOkmanytipusList();
     }
 }
