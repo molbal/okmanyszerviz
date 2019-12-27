@@ -14,6 +14,10 @@ A projekt Maven függőségkezelőt használ, így a `mvn install` parancs kiad�
 ### `okmany/ellenoriz`
 Ez a végpont egy OkmanyDTO objektumot vár és ezt is ad vissza. Hiba esetén egy listát ad vissza
  
+ 
+## Validáció
+A program a validációt reguláris kifejezéssel végzi, amelyekhez a pattern az okmánytípus kódszótárban van.
+
 ## Tesztelés
 A tesztelés egyszerűsítépséhez Swagger UI használható, ami program indítása után a `http://localhost:8001/swagger-ui` útvonalon érhető el.
 

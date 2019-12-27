@@ -1,5 +1,6 @@
 package hu.idomsoft.okmanyszerviz.config;
 
+import hu.idomsoft.okmanyszerviz.kodszotar.OkmanyKonyvtar;
 import hu.idomsoft.okmanyszerviz.kodszotar.Okmanytipus;
 import org.springframework.context.annotation.Bean;
 
@@ -10,10 +11,10 @@ public class HelperConfig {
      * @return
      */
     @Bean
-    public Okmanytipus getOkmanytipus() {
+    public OkmanyKonyvtar getOkmanyKonyvtar() {
 
-        Okmanytipus ot = new Okmanytipus();
+        OkmanyKonyvtar ok = new OkmanyKonyvtar();
 
-        return ot;
+        return ok;
     }
 }
