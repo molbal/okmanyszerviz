@@ -1,26 +1,18 @@
 package hu.idomsoft.okmanyszerviz.config;
 
 import hu.idomsoft.okmanyszerviz.kodszotar.OkmanyKonyvtar;
-import hu.idomsoft.okmanyszerviz.kodszotar.Okmanytipus;
+import lombok.Data;
 import lombok.extern.java.Log;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Log
 @Configuration
+@ComponentScan(basePackageClasses = OkmanyKonyvtar.class)
+@Data
 public class HelperConfig {
 
-    /**
-     * Létrehoz egy Okmánytípus beant
-     * @return
-     */
-    @Bean
-    @Scope("singleton")
-    public OkmanyKonyvtar getOkmanyKonyvtar() {
-        log.info("Okmánykönyvtár létrehozása");
-        OkmanyKonyvtar ok = new OkmanyKonyvtar();
-        ok.betolt();
-        return ok;
-    }
+    @Value("${kodszotar.filenev:kodszotar46_okmanytipus.json}")
+    private String kodszotarFilenev;
 }
