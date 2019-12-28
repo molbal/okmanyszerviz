@@ -15,7 +15,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log
 @Component
@@ -24,7 +25,7 @@ public class OkmanyKonyvtar {
 
     HelperConfig helper;
 
-    private List<Okmanytipus> okmanytipusList;
+    private Map<Integer, Okmanytipus> okmanytipusMap;
 
     /**
      * Konstruktor
@@ -47,7 +48,7 @@ public class OkmanyKonyvtar {
      */
     private void betolt() {
 
-        okmanytipusList = new ArrayList<>();
+        okmanytipusMap = new HashMap<>();
         JSONParser jsonParser = new JSONParser();
         try {
             JSONObject dictionary = (JSONObject)jsonParser.parse(new FileReader(helper.getKodszotarFilenev()));
@@ -56,14 +57,15 @@ public class OkmanyKonyvtar {
             for (Object row : rows) {
                 JSONObject okmanyTipus = (JSONObject) row;
 
-                okmanytipusList.add(new Okmanytipus(
-                        Integer.parseInt((String)okmanyTipus.get("kod")),
+                int okmanyKod = Integer.parseInt((String) okmanyTipus.get("kod"));
+                okmanytipusMap.put(okmanyKod, new Okmanytipus(
+                        okmanyKod,
                         (String) okmanyTipus.get("ertek"),
                         (String) okmanyTipus.get("validacio")
                 ));
             }
 
-            log.info(String.format("Az okmány kódszótár betöltése sikerült (%d db elem)", okmanytipusList.size()));
+            log.info(String.format("Az okmány kódszótár betöltése sikerült (%d db elem)", okmanytipusMap.size()));
 
         } catch (ParseException | IOException e) {
             log.severe(String.format("Sikertelen a kódszótár json betöltése: %s", e));

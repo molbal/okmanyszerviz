@@ -1,5 +1,6 @@
 package hu.idomsoft.okmanyszerviz.config;
 
+import hu.idomsoft.okmanyszerviz.rest.OkmanyREST;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.annotations.ApiIgnore;
@@ -11,6 +12,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Collections;
+
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig {
@@ -18,9 +21,20 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(OkmanyREST.class.getPackageName()))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .useDefaultResponseMessages(false)
+                .apiInfo(this.apiInfo());
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfo(
+                "Okmány mikroszerviz API",
+                "IdomSoft példafeladat megoldás",
+                getClass().getPackage().getImplementationVersion(), null,
+                new Contact("Balint Molnar", "https://github.com/molbal", "molbal@outlook.com"),
+                "License of API", "API license URL", Collections.emptyList());
     }
 
 }

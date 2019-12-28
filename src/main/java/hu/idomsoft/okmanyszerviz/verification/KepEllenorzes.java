@@ -25,6 +25,9 @@ public class KepEllenorzes {
 
     private boolean formatumOk;
     private boolean meretOk;
+    private String actualFormat;
+    private int actualW;
+    private int actualH;
 
 
     public KepEllenorzes(HelperConfig helper) {
@@ -41,6 +44,7 @@ public class KepEllenorzes {
 
         formatumOk = false;
         meretOk = false;
+        actualFormat = "";
 
         ImageInputStream imageInputStream = null;
         try {
@@ -55,11 +59,13 @@ public class KepEllenorzes {
             if (readers.hasNext()) {
                 ImageReader reader = readers.next();
                 reader.setInput(imageInputStream, true);
-                String formatName = reader.getFormatName();
+                actualFormat = reader.getFormatName().toLowerCase();
 
-                if (Arrays.asList(helper.getOkmanyTipusok()).contains(formatName.toLowerCase())) {
+                if (Arrays.asList(helper.getOkmanyTipusok()).contains(actualFormat)) {
                     formatumOk = true;
-                    meretOk = (reader.getWidth(0) == helper.getOkmanyW()) && (reader.getHeight(0) == helper.getOkmanyH());
+                    actualW = reader.getWidth(0);
+                    actualH = reader.getHeight(0);
+                    meretOk = (actualW == helper.getOkmanyW()) && (actualH == helper.getOkmanyH());
                 }
             }
             else {
