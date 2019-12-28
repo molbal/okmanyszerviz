@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Log
 @Configuration
 @ComponentScan(basePackageClasses = OkmanyKonyvtar.class)
@@ -15,4 +17,13 @@ public class HelperConfig {
 
     @Value("${kodszotar.filenev:kodszotar46_okmanytipus.json}")
     private String kodszotarFilenev;
+
+    @Value("${okmanykep.w:1063}")
+    private int okmanyW;
+
+    @Value("${okmanykep.h:827}")
+    private int okmanyH;
+
+    @Value("${okmanykep.tipusok:jpg,jpeg}")
+    private String[] okmanyTipusok;
 }
